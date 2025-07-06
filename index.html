@@ -10,6 +10,30 @@
         .monsoon-gradient {
             background: linear-gradient(135deg, #1e40af 0%, #3b82f6 25%, #06b6d4  50%, #10b981 75%, #059669 100%);
         }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-icon {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 8px;
+            font-size: 24px;
+        }
+        .brand-tagline {
+            font-style: italic;
+            opacity: 0.9;
+        }
+        .company-badge {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 12px;
+            display: inline-block;
+            margin-top: 8px;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -17,8 +41,19 @@
         <!-- Header -->
         <header class="monsoon-gradient text-white">
             <div class="container mx-auto px-4 py-6">
-                <h1 class="text-3xl font-bold">🌧️ Monsoon Insurance Platform</h1>
-                <p class="text-blue-100 mt-2">Parametric insurance for monsoon protection across India</p>
+                <div class="logo-container mb-2">
+                    <div class="logo-icon">🌧️</div>
+                    <div>
+                        <h1 class="text-3xl font-bold">MonsoonShield India</h1>
+                        <div class="company-badge">Powered by WeatherGuard Technologies</div>
+                    </div>
+                </div>
+                <p class="text-blue-100 mt-3 brand-tagline">
+                    "Protecting India's Future, One Monsoon at a Time"
+                </p>
+                <p class="text-blue-200 text-sm mt-1">
+                    Advanced parametric insurance solutions backed by real-time weather data
+                </p>
             </div>
         </header>
 
@@ -55,8 +90,11 @@
             <h2 class="text-2xl font-bold mb-6">Available Monsoon Insurance Policies</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <template x-for="policy in policies" :key="policy.id">
-                    <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
-                        <h3 class="text-xl font-semibold mb-2" x-text="policy.name"></h3>
+                    <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500 hover:shadow-lg transition-shadow">
+                        <div class="flex items-start justify-between mb-2">
+                            <h3 class="text-xl font-semibold" x-text="policy.name"></h3>
+                            <div class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">MonsoonShield</div>
+                        </div>
                         <p class="text-gray-600 mb-4" x-text="policy.description"></p>
                         <div class="space-y-2">
                             <div class="flex justify-between">
@@ -85,6 +123,15 @@
         <div x-show="activeTab === 'calculator'" class="container mx-auto px-4 py-8">
             <div class="max-w-2xl mx-auto">
                 <h2 class="text-2xl font-bold mb-6">Premium Calculator</h2>
+                <div class="bg-gradient-to-r from-blue-50 to-green-50 p-4 rounded-lg mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="text-2xl">🛡️</div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">MonsoonShield Smart Calculator</h3>
+                            <p class="text-sm text-gray-600">AI-powered risk assessment using real-time weather data</p>
+                        </div>
+                    </div>
+                </div>
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <div class="space-y-4">
                         <div>
@@ -239,27 +286,65 @@
         <!-- Footer -->
         <footer class="bg-gray-800 text-white py-8 mt-12">
             <div class="container mx-auto px-4">
-                <div class="grid md:grid-cols-3 gap-8">
+                <div class="grid md:grid-cols-4 gap-8">
+                    <!-- Company Info -->
+                    <div>
+                        <div class="logo-container mb-4">
+                            <div class="text-2xl">🌧️</div>
+                            <div>
+                                <h3 class="font-bold text-lg">MonsoonShield India</h3>
+                                <p class="text-xs text-gray-400">WeatherGuard Technologies</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 text-sm">
+                            India's leading parametric insurance platform for monsoon protection.
+                        </p>
+                    </div>
+                    
+                    <!-- About Parametric Insurance -->
                     <div>
                         <h3 class="font-semibold mb-4">About Parametric Insurance</h3>
                         <p class="text-gray-300 text-sm">
-                            Parametric insurance provides automatic payouts based on rainfall data, 
-                            offering faster claim processing than traditional insurance.
+                            Automatic payouts based on rainfall data, offering faster claim 
+                            processing than traditional insurance.
                         </p>
                     </div>
+                    
+                    <!-- Coverage Areas -->
                     <div>
                         <h3 class="font-semibold mb-4">Coverage Areas</h3>
                         <p class="text-gray-300 text-sm">
-                            Covering 16 major Indian states with authentic weather risk data 
-                            and proven implementation models.
+                            16 major Indian states with authentic weather risk data and 
+                            proven implementation models.
                         </p>
                     </div>
+                    
+                    <!-- Contact & Trust -->
                     <div>
-                        <h3 class="font-semibold mb-4">Based on Real Programs</h3>
-                        <p class="text-gray-300 text-sm">
-                            Built on successful implementations including Nagaland's DRTPS program 
-                            and SEWA women workers insurance initiatives.
+                        <h3 class="font-semibold mb-4">Trust & Reliability</h3>
+                        <p class="text-gray-300 text-sm mb-3">
+                            Built on successful programs including Nagaland's DRTPS and 
+                            SEWA women workers initiatives.
                         </p>
+                        <div class="text-xs text-gray-400">
+                            <div>📞 1800-MONSOON (1800-666-7666)</div>
+                            <div>📧 support@monsoonshield.in</div>
+                            <div>🏢 Regulated by IRDAI</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Copyright Bar -->
+                <div class="border-t border-gray-700 mt-8 pt-6">
+                    <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+                        <div>
+                            © 2024 MonsoonShield India | WeatherGuard Technologies Pvt. Ltd. All rights reserved.
+                        </div>
+                        <div class="flex space-x-6 mt-2 md:mt-0">
+                            <span>Privacy Policy</span>
+                            <span>Terms of Service</span>
+                            <span>IRDAI License: IRDAI/HLT/MISC/143/02/2024</span>
+                        </div>
                     </div>
                 </div>
             </div>
