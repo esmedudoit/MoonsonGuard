@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monsoon Insurance Platform - India</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <style>
+        .monsoon-gradient {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 25%, #06b6d4  50%, #10b981 75%, #059669 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div x-data="monsoonApp()">
+        <!-- Header -->
+        <header class="monsoon-gradient text-white">
+            <div class="container mx-auto px-4 py-6">
+                <h1 class="text-3xl font-bold">🌧️ Monsoon Insurance Platform</h1>
+                <p class="text-blue-100 mt-2">Parametric insurance for monsoon protection across India</p>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="bg-white shadow-sm border-b">
+            <div class="container mx-auto px-4">
+                <div class="flex space-x-8">
+                    <button @click="activeTab = 'policies'" 
+                            :class="activeTab === 'policies' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500'"
+                            class="py-4 px-1 border-b-2 font-medium">
+                        Insurance Policies
+                    </button>
+                    <button @click="activeTab = 'calculator'" 
+                            :class="activeTab === 'calculator' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500'"
+                            class="py-4 px-1 border-b-2 font-medium">
+                        Premium Calculator
+                    </button>
+                    <button @click="activeTab = 'weather'" 
+                            :class="activeTab === 'weather' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500'"
+                            class="py-4 px-1 border-b-2 font-medium">
+                        Weather Risks
+                    </button>
+                    <button @click="activeTab = 'apply'" 
+                            :class="activeTab === 'apply' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500'"
+                            class="py-4 px-1 border-b-2 font-medium">
+                        Apply Now
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Policies Tab -->
+        <div x-show="activeTab === 'policies'" class="container mx-auto px-4 py-8">
+            <h2 class="text-2xl font-bold mb-6">Available Monsoon Insurance Policies</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <template x-for="policy in policies" :key="policy.id">
+                    <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
+                        <h3 class="text-xl font-semibold mb-2" x-text="policy.name"></h3>
+                        <p class="text-gray-600 mb-4" x-text="policy.description"></p>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-500">Coverage:</span>
+                                <span class="font-medium" x-text="'₹' + policy.coverage.toLocaleString()"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-500">Premium (Annual):</span>
+                                <span class="font-medium" x-text="'₹' + policy.premium.toLocaleString()"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-500">Rainfall Threshold:</span>
+                                <span class="font-medium" x-text="policy.rainfallThreshold + 'mm'"></span>
+                            </div>
+                        </div>
+                        <button @click="selectPolicy(policy)" 
+                                class="w-full mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
+                            View Details
+                        </button>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Calculator Tab -->
+        <div x-show="activeTab === 'calculator'" class="container mx-auto px-4 py-8">
+            <div class="max-w-2xl mx-auto">
+                <h2 class="text-2xl font-bold mb-6">Premium Calculator</h2>
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Select State</label>
+                            <select x-model="calculator.state" @change="updateRiskLevel()" 
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2">
+                                <option value="">Choose your state</option>
+                                <template x-for="risk in weatherRisks" :key="risk.state">
+                                    <option :value="risk.state" x-text="risk.state + ' (' + risk.district + ')'"></option>
+                                </template>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Coverage Amount</label>
+                            <select x-model="calculator.coverage" 
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2">
+                                <option value="50000">₹50,000</option>
+                                <option value="300000">₹3,00,000</option>
+                                <option value="500000">₹5,00,000</option>
+                                <option value="1000000">₹10,00,000</option>
+                                <option value="2000000">₹20,00,000</option>
+                            </select>
+                        </div>
+
+                        <div x-show="calculator.riskLevel">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Risk Assessment</label>
+                            <div class="bg-gray-50 p-3 rounded">
+                                <p><strong>Risk Level:</strong> <span x-text="calculator.riskLevel"></span></p>
+                                <p><strong>Overall Risk Score:</strong> <span x-text="calculator.riskScore"></span>/10</p>
+                            </div>
+                        </div>
+
+                        <button @click="calculatePremium()" 
+                                class="w-full bg-green-600 text-white py-3 px-4 rounded-md hover:bg-green-700">
+                            Calculate Premium
+                        </button>
+
+                        <div x-show="calculator.result" class="bg-blue-50 border border-blue-200 rounded-md p-4">
+                            <h3 class="font-semibold text-blue-900">Calculated Premium</h3>
+                            <p class="text-2xl font-bold text-blue-600" x-text="'₹' + calculator.result.toLocaleString()"></p>
+                            <p class="text-sm text-blue-700 mt-1">Annual premium based on risk assessment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weather Risks Tab -->
+        <div x-show="activeTab === 'weather'" class="container mx-auto px-4 py-8">
+            <h2 class="text-2xl font-bold mb-6">Weather Risk Assessment by State</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <template x-for="risk in weatherRisks" :key="risk.state">
+                    <div class="bg-white rounded-lg shadow-md p-4">
+                        <h3 class="font-semibold text-lg" x-text="risk.state"></h3>
+                        <p class="text-gray-600 text-sm" x-text="risk.district"></p>
+                        <div class="mt-3 space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-sm">Rainfall Risk:</span>
+                                <span :class="getRiskColor(risk.rainfallRisk)" class="text-sm font-medium" x-text="risk.rainfallRisk + '/10'"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm">Flood Risk:</span>
+                                <span :class="getRiskColor(risk.floodRisk)" class="text-sm font-medium" x-text="risk.floodRisk + '/10'"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm">Drought Risk:</span>
+                                <span :class="getRiskColor(risk.droughtRisk)" class="text-sm font-medium" x-text="risk.droughtRisk + '/10'"></span>
+                            </div>
+                            <div class="mt-2 pt-2 border-t">
+                                <div class="flex justify-between">
+                                    <span class="text-sm font-medium">Overall Risk:</span>
+                                    <span :class="getRiskColor(risk.overallRisk)" class="text-sm font-bold" x-text="risk.riskLevel"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Apply Tab -->
+        <div x-show="activeTab === 'apply'" class="container mx-auto px-4 py-8">
+            <div class="max-w-2xl mx-auto">
+                <h2 class="text-2xl font-bold mb-6">Apply for Monsoon Insurance</h2>
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <form @submit.prevent="submitApplication()">
+                        <div class="space-y-4">
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                                    <input type="text" x-model="application.firstName" required
+                                           class="w-full border border-gray-300 rounded-md px-3 py-2">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                                    <input type="text" x-model="application.lastName" required
+                                           class="w-full border border-gray-300 rounded-md px-3 py-2">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                <input type="email" x-model="application.email" required
+                                       class="w-full border border-gray-300 rounded-md px-3 py-2">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                                <input type="tel" x-model="application.phone" required
+                                       class="w-full border border-gray-300 rounded-md px-3 py-2">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">State</label>
+                                <select x-model="application.state" required
+                                        class="w-full border border-gray-300 rounded-md px-3 py-2">
+                                    <option value="">Select your state</option>
+                                    <template x-for="risk in weatherRisks" :key="risk.state">
+                                        <option :value="risk.state" x-text="risk.state"></option>
+                                    </template>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Property Type</label>
+                                <select x-model="application.propertyType" required
+                                        class="w-full border border-gray-300 rounded-md px-3 py-2">
+                                    <option value="">Select property type</option>
+                                    <option value="agriculture">Agricultural Land</option>
+                                    <option value="residential">Residential Property</option>
+                                    <option value="commercial">Commercial Property</option>
+                                    <option value="livestock">Livestock</option>
+                                </select>
+                            </div>
+                            
+                            <button type="submit" 
+                                    class="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700">
+                                Submit Application
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div x-show="application.submitted" class="mt-6 bg-green-50 border border-green-200 rounded-md p-4">
+                        <h3 class="font-semibold text-green-900">Application Submitted Successfully!</h3>
+                        <p class="text-green-700 mt-1">We will review your application and contact you within 2-3 business days.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-8 mt-12">
+            <div class="container mx-auto px-4">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="font-semibold mb-4">About Parametric Insurance</h3>
+                        <p class="text-gray-300 text-sm">
+                            Parametric insurance provides automatic payouts based on rainfall data, 
+                            offering faster claim processing than traditional insurance.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-4">Coverage Areas</h3>
+                        <p class="text-gray-300 text-sm">
+                            Covering 16 major Indian states with authentic weather risk data 
+                            and proven implementation models.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-4">Based on Real Programs</h3>
+                        <p class="text-gray-300 text-sm">
+                            Built on successful implementations including Nagaland's DRTPS program 
+                            and SEWA women workers insurance initiatives.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function monsoonApp() {
+            return {
+                activeTab: 'policies',
+                
+                policies: [
+                    {
+                        id: 1,
+                        name: "Micro Monsoon Shield",
+                        description: "Basic coverage for small farmers and households",
+                        coverage: 50000,
+                        premium: 2500,
+                        rainfallThreshold: 150,
+                        payoutTrigger: "Below 150mm in monsoon season"
+                    },
+                    {
+                        id: 2,
+                        name: "Livestock Monsoon Care",
+                        description: "Protection for livestock and dairy farmers",
+                        coverage: 300000,
+                        premium: 18000,
+                        rainfallThreshold: 200,
+                        payoutTrigger: "Extreme rainfall above 200mm/day"
+                    },
+                    {
+                        id: 3,
+                        name: "Parametric Monsoon Protection Plus",
+                        description: "Comprehensive agricultural and property protection",
+                        coverage: 500000,
+                        premium: 30000,
+                        rainfallThreshold: 180,
+                        payoutTrigger: "Rainfall deviation >20% from normal"
+                    },
+                    {
+                        id: 4,
+                        name: "Property Flood Shield",
+                        description: "Urban and rural property protection from monsoon flooding",
+                        coverage: 1000000,
+                        premium: 65000,
+                        rainfallThreshold: 250,
+                        payoutTrigger: "Daily rainfall exceeding 250mm"
+                    },
+                    {
+                        id: 5,
+                        name: "Nagaland State Disaster Protection",
+                        description: "Premium coverage based on successful DRTPS program",
+                        coverage: 2000000,
+                        premium: 120000,
+                        rainfallThreshold: 300,
+                        payoutTrigger: "State-wide disaster declaration"
+                    }
+                ],
+                
+                weatherRisks: [
+                    { state: "Assam", district: "Kamrup", rainfallRisk: 8, floodRisk: 9, droughtRisk: 3, cycloneRisk: 2, overallRisk: 7, riskLevel: "High" },
+                    { state: "West Bengal", district: "North 24 Parganas", rainfallRisk: 7, floodRisk: 8, droughtRisk: 4, cycloneRisk: 8, overallRisk: 8, riskLevel: "Very High" },
+                    { state: "Bihar", district: "Patna", rainfallRisk: 6, floodRisk: 9, droughtRisk: 5, cycloneRisk: 1, overallRisk: 6, riskLevel: "High" },
+                    { state: "Uttar Pradesh", district: "Lucknow", rainfallRisk: 5, floodRisk: 6, droughtRisk: 6, cycloneRisk: 1, overallRisk: 5, riskLevel: "Medium" },
+                    { state: "Maharashtra", district: "Pune", rainfallRisk: 6, floodRisk: 5, droughtRisk: 7, cycloneRisk: 3, overallRisk: 6, riskLevel: "High" },
+                    { state: "Gujarat", district: "Ahmedabad", rainfallRisk: 4, floodRisk: 3, droughtRisk: 8, cycloneRisk: 6, overallRisk: 6, riskLevel: "High" },
+                    { state: "Rajasthan", district: "Jaipur", rainfallRisk: 3, floodRisk: 2, droughtRisk: 9, cycloneRisk: 1, overallRisk: 5, riskLevel: "Medium" },
+                    { state: "Madhya Pradesh", district: "Bhopal", rainfallRisk: 5, floodRisk: 4, droughtRisk: 6, cycloneRisk: 1, overallRisk: 4, riskLevel: "Medium" },
+                    { state: "Chhattisgarh", district: "Raipur", rainfallRisk: 6, floodRisk: 5, droughtRisk: 5, cycloneRisk: 1, overallRisk: 5, riskLevel: "Medium" },
+                    { state: "Jharkhand", district: "Ranchi", rainfallRisk: 6, floodRisk: 6, droughtRisk: 4, cycloneRisk: 1, overallRisk: 5, riskLevel: "Medium" },
+                    { state: "Odisha", district: "Bhubaneswar", rainfallRisk: 7, floodRisk: 8, droughtRisk: 4, cycloneRisk: 9, overallRisk: 8, riskLevel: "Very High" },
+                    { state: "Andhra Pradesh", district: "Visakhapatnam", rainfallRisk: 6, floodRisk: 6, droughtRisk: 5, cycloneRisk: 7, overallRisk: 7, riskLevel: "High" },
+                    { state: "Telangana", district: "Hyderabad", rainfallRisk: 5, floodRisk: 4, droughtRisk: 6, cycloneRisk: 2, overallRisk: 5, riskLevel: "Medium" },
+                    { state: "Karnataka", district: "Bangalore", rainfallRisk: 5, floodRisk: 4, droughtRisk: 7, cycloneRisk: 2, overallRisk: 5, riskLevel: "Medium" },
+                    { state: "Tamil Nadu", district: "Chennai", rainfallRisk: 6, floodRisk: 7, droughtRisk: 6, cycloneRisk: 8, overallRisk: 7, riskLevel: "High" },
+                    { state: "Kerala", district: "Kochi", rainfallRisk: 8, floodRisk: 9, droughtRisk: 2, cycloneRisk: 4, overallRisk: 7, riskLevel: "High" },
+                    { state: "Nagaland", district: "Kohima", rainfallRisk: 7, floodRisk: 6, droughtRisk: 3, cycloneRisk: 1, overallRisk: 5, riskLevel: "Medium" }
+                ],
+                
+                calculator: {
+                    state: '',
+                    coverage: '500000',
+                    riskLevel: '',
+                    riskScore: 0,
+                    result: 0
+                },
+                
+                application: {
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    phone: '',
+                    state: '',
+                    propertyType: '',
+                    submitted: false
+                },
+                
+                selectPolicy(policy) {
+                    alert(`Policy Details:\n\n${policy.name}\n\nCoverage: ₹${policy.coverage.toLocaleString()}\nPremium: ₹${policy.premium.toLocaleString()}\n\nPayout Trigger: ${policy.payoutTrigger}\n\nThis parametric insurance provides automatic payouts based on rainfall measurements, ensuring faster claim processing than traditional insurance.`);
+                },
+                
+                updateRiskLevel() {
+                    const risk = this.weatherRisks.find(r => r.state === this.calculator.state);
+                    if (risk) {
+                        this.calculator.riskLevel = risk.riskLevel;
+                        this.calculator.riskScore = risk.overallRisk;
+                    }
+                },
+                
+                calculatePremium() {
+                    const basePremium = parseInt(this.calculator.coverage) * 0.06; // 6% base rate
+                    const riskMultiplier = this.calculator.riskScore / 10;
+                    const finalPremium = basePremium * (0.8 + riskMultiplier * 0.4);
+                    this.calculator.result = Math.round(finalPremium);
+                },
+                
+                submitApplication() {
+                    this.application.submitted = true;
+                    setTimeout(() => {
+                        this.application.submitted = false;
+                        // Reset form
+                        this.application = {
+                            firstName: '',
+                            lastName: '',
+                            email: '',
+                            phone: '',
+                            state: '',
+                            propertyType: '',
+                            submitted: false
+                        };
+                    }, 5000);
+                },
+                
+                getRiskColor(risk) {
+                    if (risk <= 3) return 'text-green-600';
+                    if (risk <= 6) return 'text-yellow-600';
+                    if (risk <= 8) return 'text-orange-600';
+                    return 'text-red-600';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

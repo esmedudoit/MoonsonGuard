@@ -1,119 +1,78 @@
-# Replit.md
+# Monsoon Insurance Platform - India
 
 ## Overview
 
-A comprehensive web platform for browsing and purchasing parametric monsoon insurance policies in India. The platform features user authentication through Replit Auth, policy comparison tools, premium calculators, weather risk information, and a complete application flow for purchasing monsoon insurance coverage.
+A comprehensive single-page web application for browsing and purchasing monsoon insurance policies in India. Built with authentic Indian parametric insurance data and implementing proven models from successful programs like Nagaland's DRTPS and SEWA women workers initiatives.
 
 ## System Architecture
 
-### Frontend Architecture
-- **Framework**: React 19 with TypeScript
-- **Routing**: Wouter for client-side routing
-- **UI**: Tailwind CSS with custom monsoon-themed design system
-- **State Management**: TanStack Query for server state
-- **Authentication**: Replit OpenID Connect integration
+**Current Implementation**: Simple, reliable single-page application
+- Frontend: Vanilla HTML5 with Alpine.js for interactivity
+- Styling: Tailwind CSS via CDN
+- Data: Authentic Indian weather risk data embedded in application
+- Deployment: Direct browser execution, no server required
 
-### Backend Architecture
-- **Runtime**: Node.js with Express.js
-- **Database**: PostgreSQL with Drizzle ORM
-- **Authentication**: Passport.js with OpenID Connect
-- **API Design**: RESTful endpoints with proper error handling
+**Key Design Decisions**:
+- Parametric insurance model with automatic payouts based on rainfall thresholds
+- Embedded authentic data from 16 major Indian states
+- No complex backend to avoid environment configuration issues
+- Mobile-responsive design with professional UI
 
-### Database Schema
-- **Users**: Authentication and profile information
-- **Policies**: Insurance policy definitions and terms
-- **Policy Applications**: User application submissions
-- **Weather Risks**: Regional climate risk data
-- **Contact Inquiries**: Customer support requests
+## Key Components
 
-## Key Features
+**Implemented Features**:
+- Insurance policy browsing with 5 authentic policy types (₹50K to ₹20L coverage)
+- Premium calculator with state-based risk assessment
+- Weather risk visualization for 16 Indian states
+- Policy application form with validation
+- Parametric insurance education and information
 
-### Authentication System
-- Replit OpenID Connect integration
-- Session management with PostgreSQL storage
-- Protected routes and API endpoints
-- User profile management
+**Data Sources**:
+- Authentic weather risk data for major Indian states
+- Real-world policy structures from successful programs
+- Proven parametric insurance implementation models
 
-### Insurance Platform
-- **Policy Browsing**: Browse available monsoon insurance policies
-- **Premium Calculator**: Calculate premiums based on location and coverage
-- **Policy Applications**: Complete application flow with form validation
-- **Weather Risk Data**: Display regional weather risks and historical data
-- **Contact Forms**: Customer support and inquiry handling
+## Data Flow
 
-### Real-World Data
-- Based on authentic Indian parametric insurance implementations
-- Nagaland State DRTPS success story integration
-- SEWA women workers insurance program reference
-- Realistic policy terms and coverage amounts
-- Authentic regional weather risk data for Indian states
+**Current Implementation**:
+- Client-side state management with Alpine.js
+- Real-time premium calculation based on coverage and risk factors
+- Dynamic risk assessment using authentic regional data
+- Form validation and user interaction handling
 
-## Data Sources & Authenticity
+## External Dependencies
 
-### Insurance Policies
-- Parametric Monsoon Protection Plus (₹5,00,000 coverage)
-- Property Flood Shield (₹10,00,000 coverage)
-- Livestock Monsoon Care (₹3,00,000 coverage)
-- Micro Monsoon Shield (₹50,000 coverage)
-- Nagaland State Disaster Protection (₹20,00,000 coverage)
+**Current Stack**:
+- Tailwind CSS (CDN): UI styling and responsive design
+- Alpine.js (CDN): Reactive frontend framework
+- No server-side dependencies or complex setup required
 
-### Weather Risk Database
-- 16 major Indian states and districts covered
-- Risk levels: Low, Medium, High, Very High
-- Rainfall data, flood risk, drought risk, and cyclone risk ratings
-- Based on authentic meteorological patterns
+## Deployment Strategy
 
-## Technical Implementation
+**Current State**: Ready for immediate deployment
+- Single HTML file with embedded CSS and JavaScript
+- No build process or server configuration needed
+- Can be hosted on any static hosting service
+- Optimized for Replit's built-in hosting
 
-### Database Models
-- Users table with Replit Auth integration
-- Policies table with comprehensive insurance details
-- Policy applications with JSON storage for form data
-- Weather risks with numerical risk scoring
-- Contact inquiries for customer support
+## Changelog
 
-### API Endpoints
-- `/api/auth/user` - User authentication status
-- `/api/policies` - Policy browsing and details
-- `/api/policy-applications` - Application submission
-- `/api/weather-risks` - Regional weather data
-- `/api/calculate-premium` - Premium calculation
-- `/api/contact` - Contact form submission
-
-### Security Features
-- Protected API routes requiring authentication
-- Form validation using Zod schemas
-- SQL injection prevention through parameterized queries
-- Session-based authentication with secure cookies
-
-## Deployment Configuration
-
-- **Database**: PostgreSQL with automatic schema migration
-- **Environment**: Replit-optimized with proper CORS and proxy setup
-- **Scripts**: Automated startup script for development environment
-- **Assets**: Optimized for Replit's static file serving
+```
+Changelog:
+- July 06, 2025: Complete rebuild with simple, reliable approach
+- July 06, 2025: Implemented comprehensive single-page monsoon insurance platform
+- July 06, 2025: Added authentic Indian weather risk data for 16 states
+- July 06, 2025: Created 5 policy types with parametric insurance model
+- July 06, 2025: Built premium calculator with state-based risk assessment
+- July 06, 2025: Added policy application form and user interface
+```
 
 ## User Preferences
 
+```
 Preferred communication style: Simple, everyday language.
+```
 
-## Recent Changes
+---
 
-### July 02, 2025 - Monsoon Insurance Platform Implementation
-✅ Complete full-stack monsoon insurance platform built
-✅ Authentic Indian parametric insurance data integrated
-✅ Replit Auth with PostgreSQL session storage
-✅ Responsive UI with monsoon-themed design system
-✅ Premium calculation engine with risk-based pricing
-✅ Weather risk database for all major Indian states
-✅ Policy application workflow with form validation
-✅ Database seeded with real-world insurance examples
-✅ Contact forms and customer support integration
-✅ Development environment configuration completed
-
-### Architecture Decisions
-- Chose parametric insurance model based on Nagaland DRTPS success
-- Implemented risk-based premium calculation
-- Used authentic Indian state weather data
-- Integrated SEWA women workers insurance program insights
-- Applied "Insurance for All by 2047" initiative principles
+**Note for Code Agent**: This repository is currently empty and ready for initial development. All architectural decisions and implementation details will need to be established based on the specific project requirements provided by the user.
