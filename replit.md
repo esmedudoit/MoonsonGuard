@@ -6,17 +6,19 @@ A comprehensive single-page web application for browsing and purchasing monsoon 
 
 ## System Architecture
 
-**Current Implementation**: Simple, reliable single-page application
+**Current Implementation**: Production-ready web application with proper server
 - Frontend: Vanilla HTML5 with Alpine.js for interactivity
+- Backend: Node.js Express server with health check endpoints
 - Styling: Tailwind CSS via CDN
 - Data: Authentic Indian weather risk data embedded in application
-- Deployment: Direct browser execution, no server required
+- Deployment: Node.js server with proper health checks for cloud deployment
 
 **Key Design Decisions**:
 - Parametric insurance model with automatic payouts based on rainfall thresholds
 - Embedded authentic data from 16 major Indian states
-- No complex backend to avoid environment configuration issues
+- Express.js server with compression, CORS, and health check endpoints
 - Mobile-responsive design with professional UI
+- Proper deployment configuration for cloud platforms
 
 ## Key Components
 
@@ -45,15 +47,19 @@ A comprehensive single-page web application for browsing and purchasing monsoon 
 **Current Stack**:
 - Tailwind CSS (CDN): UI styling and responsive design
 - Alpine.js (CDN): Reactive frontend framework
-- No server-side dependencies or complex setup required
+- Express.js: Web server framework
+- Compression: HTTP compression middleware
+- CORS: Cross-origin resource sharing middleware
+- Node.js: Server runtime environment
 
 ## Deployment Strategy
 
-**Current State**: Ready for immediate deployment
-- Single HTML file with embedded CSS and JavaScript
-- No build process or server configuration needed
-- Can be hosted on any static hosting service
-- Optimized for Replit's built-in hosting
+**Current State**: Ready for cloud deployment
+- Node.js Express server with health check endpoints
+- Proper HTTP compression and CORS configuration
+- Environment variable support for port configuration
+- Health check endpoint at `/health` for deployment monitoring
+- Graceful shutdown handling for production environments
 
 ## Changelog
 
@@ -65,6 +71,10 @@ Changelog:
 - July 06, 2025: Created 5 policy types with parametric insurance model
 - July 06, 2025: Built premium calculator with state-based risk assessment
 - July 06, 2025: Added policy application form and user interface
+- July 06, 2025: Fixed deployment issues by implementing proper Node.js server
+- July 06, 2025: Added Express.js server with health check endpoints
+- July 06, 2025: Configured proper HTTP compression and CORS support
+- July 06, 2025: Updated run command to use Node.js server instead of Python
 ```
 
 ## User Preferences
