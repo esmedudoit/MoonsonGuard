@@ -12,3 +12,15 @@ externalPort = 5173
 
 [deployment]
 deploymentTarget = "cloudrun"
+
+[workflows]
+runButton = "Run"
+
+[[workflows.workflow]]
+name = "Run"
+author = 44122600
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "node server.js"
