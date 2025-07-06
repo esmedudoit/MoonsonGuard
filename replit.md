@@ -1,4 +1,4 @@
-# Monsoon Insurance Platform - India
+# Monsoon Parametric Insurance Platform - India
 
 ## Overview
 

@@ -44,7 +44,7 @@
                 <div class="logo-container mb-2">
                     <div class="logo-icon">🌧️</div>
                     <div>
-                        <h1 class="text-3xl font-bold">MonsoonShield India</h1>
+                        <h1 class="text-3xl font-bold">Monsoon Parametric Insurance Platform</h1>
                         <div class="company-badge">Powered by WeatherGuard Technologies</div>
                     </div>
                 </div>
@@ -144,7 +144,7 @@
                                 </template>
                             </select>
                         </div>
-                        
+
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Coverage Amount</label>
                             <select x-model="calculator.coverage" 
@@ -232,19 +232,19 @@
                                            class="w-full border border-gray-300 rounded-md px-3 py-2">
                                 </div>
                             </div>
-                            
+
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
                                 <input type="email" x-model="application.email" required
                                        class="w-full border border-gray-300 rounded-md px-3 py-2">
                             </div>
-                            
+
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
                                 <input type="tel" x-model="application.phone" required
                                        class="w-full border border-gray-300 rounded-md px-3 py-2">
                             </div>
-                            
+
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">State</label>
                                 <select x-model="application.state" required
@@ -255,7 +255,7 @@
                                     </template>
                                 </select>
                             </div>
-                            
+
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Property Type</label>
                                 <select x-model="application.propertyType" required
@@ -267,14 +267,14 @@
                                     <option value="livestock">Livestock</option>
                                 </select>
                             </div>
-                            
+
                             <button type="submit" 
                                     class="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700">
                                 Submit Application
                             </button>
                         </div>
                     </form>
-                    
+
                     <div x-show="application.submitted" class="mt-6 bg-green-50 border border-green-200 rounded-md p-4">
                         <h3 class="font-semibold text-green-900">Application Submitted Successfully!</h3>
                         <p class="text-green-700 mt-1">We will review your application and contact you within 2-3 business days.</p>
@@ -300,7 +300,7 @@
                             India's leading parametric insurance platform for monsoon protection.
                         </p>
                     </div>
-                    
+
                     <!-- About Parametric Insurance -->
                     <div>
                         <h3 class="font-semibold mb-4">About Parametric Insurance</h3>
@@ -309,7 +309,7 @@
                             processing than traditional insurance.
                         </p>
                     </div>
-                    
+
                     <!-- Coverage Areas -->
                     <div>
                         <h3 class="font-semibold mb-4">Coverage Areas</h3>
@@ -318,7 +318,7 @@
                             proven implementation models.
                         </p>
                     </div>
-                    
+
                     <!-- Contact & Trust -->
                     <div>
                         <h3 class="font-semibold mb-4">Trust & Reliability</h3>
@@ -333,7 +333,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Copyright Bar -->
                 <div class="border-t border-gray-700 mt-8 pt-6">
                     <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
@@ -355,7 +355,7 @@
         function monsoonApp() {
             return {
                 activeTab: 'policies',
-                
+
                 policies: [
                     {
                         id: 1,
@@ -403,7 +403,7 @@
                         payoutTrigger: "State-wide disaster declaration"
                     }
                 ],
-                
+
                 weatherRisks: [
                     { state: "Assam", district: "Kamrup", rainfallRisk: 8, floodRisk: 9, droughtRisk: 3, cycloneRisk: 2, overallRisk: 7, riskLevel: "High" },
                     { state: "West Bengal", district: "North 24 Parganas", rainfallRisk: 7, floodRisk: 8, droughtRisk: 4, cycloneRisk: 8, overallRisk: 8, riskLevel: "Very High" },
@@ -423,7 +423,7 @@
                     { state: "Kerala", district: "Kochi", rainfallRisk: 8, floodRisk: 9, droughtRisk: 2, cycloneRisk: 4, overallRisk: 7, riskLevel: "High" },
                     { state: "Nagaland", district: "Kohima", rainfallRisk: 7, floodRisk: 6, droughtRisk: 3, cycloneRisk: 1, overallRisk: 5, riskLevel: "Medium" }
                 ],
-                
+
                 calculator: {
                     state: '',
                     coverage: '500000',
@@ -431,7 +431,7 @@
                     riskScore: 0,
                     result: 0
                 },
-                
+
                 application: {
                     firstName: '',
                     lastName: '',
@@ -441,11 +441,11 @@
                     propertyType: '',
                     submitted: false
                 },
-                
+
                 selectPolicy(policy) {
                     alert(`Policy Details:\n\n${policy.name}\n\nCoverage: ₹${policy.coverage.toLocaleString()}\nPremium: ₹${policy.premium.toLocaleString()}\n\nPayout Trigger: ${policy.payoutTrigger}\n\nThis parametric insurance provides automatic payouts based on rainfall measurements, ensuring faster claim processing than traditional insurance.`);
                 },
-                
+
                 updateRiskLevel() {
                     const risk = this.weatherRisks.find(r => r.state === this.calculator.state);
                     if (risk) {
@@ -453,14 +453,14 @@
                         this.calculator.riskScore = risk.overallRisk;
                     }
                 },
-                
+
                 calculatePremium() {
                     const basePremium = parseInt(this.calculator.coverage) * 0.06; // 6% base rate
                     const riskMultiplier = this.calculator.riskScore / 10;
                     const finalPremium = basePremium * (0.8 + riskMultiplier * 0.4);
                     this.calculator.result = Math.round(finalPremium);
                 },
-                
+
                 submitApplication() {
                     this.application.submitted = true;
                     setTimeout(() => {
@@ -477,7 +477,7 @@
                         };
                     }, 5000);
                 },
-                
+
                 getRiskColor(risk) {
                     if (risk <= 3) return 'text-green-600';
                     if (risk <= 6) return 'text-yellow-600';

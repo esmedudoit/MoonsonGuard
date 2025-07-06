@@ -20,7 +20,7 @@ app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'healthy',
     timestamp: new Date().toISOString(),
-    service: 'monsoon-insurance-platform'
+    service: 'monsoon-parametric-insurance-platform'
   });
 });
 
@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 
 // Start the server
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🌧️ Monsoon Insurance Platform server running on port ${PORT}`);
+  console.log(`🌧️ Monsoon Parametric Insurance Platform server running on port ${PORT}`);
   console.log(`📊 Health check available at: http://localhost:${PORT}/health`);
   console.log(`🚀 Application available at: http://localhost:${PORT}`);
 });
